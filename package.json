@@ -4,6 +4,10 @@
   "description": "test-PWA",
   "main": "index.js",
   "dependencies": {
+    "bootstrap": "4.0.0-beta.2",
+    "google-maps": "^3.2.1",
+    "jquery": "^3.2.1",
+    "popper.js": "^1.12.9",
     "sw-toolbox": "^3.6.0",
     "workbox-sw": "^2.1.2"
   },
@@ -16,6 +20,7 @@
     "clean-webpack-plugin": "^0.1.15",
     "copy-webpack-plugin": "^4.2.3",
     "css-loader": "^0.26.2",
+    "exports-loader": "^0.6.4",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.10.1",
     "html-loader": "^0.4.5",

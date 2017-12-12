@@ -17,7 +17,8 @@ module.exports = env => {
 	const isProd = env && env.production;
 	return {
 		entry: {
-			main: './src/scripts/index.js'
+			main: './src/scripts/index.js',
+			vendors: ['jquery']
 		},
 		output: {
 			path: dist,

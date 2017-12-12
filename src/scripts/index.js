@@ -1,26 +1,24 @@
+import 'bootstrap/scss/bootstrap.scss';
+import 'bootstrap';
+
+
+import '../styles/main.scss';
+import GoogleMap from './core/map.js';
 
 
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function () {
-        navigator.serviceWorker.register('/service-worker.js').then(
-            function (registration) {
-                // Registration was successful
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            },
-            function (err) {
-                // registration failed :(
-                console.log('ServiceWorker registration failed: ', err);
-            });
-    });
-}
-
-function initMap() {
-    // Create a map object and specify the DOM element for display.
-    var map = new google.maps.Map(document.getElementById('map'), {
-        center: {
-            lat: -34.397,
-            lng: 150.644
-        },
-        zoom: 8
+    window.addEventListener('load', async function () {
+        const googleMap = new GoogleMap()
+        const googleMapsClient = await googleMap.createClient({
+            key: 'AIzaSyAaWyCyOrGFn4mC86CbIZ6fRSsYA6K68Ok'
+        });
+        const map = await googleMap.createMap(googleMapsClient, document.getElementById('map'));
+        
+        try {
+            const registration = await navigator.serviceWorker.register('/service-worker.js')
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        } catch (error) {
+            console.log('ServiceWorker registration failed: ', error);
+        }
     });
 }

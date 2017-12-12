@@ -14,6 +14,15 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = (isProd, options = {}) => {
 	let plugins = [
+		new webpack.ProvidePlugin({
+			$: "jquery",
+			jQuery: "jquery",
+			'window.jQuery': 'jquery',
+			Popper: ['popper.js', 'default'],
+			// In case you imported plugins individually, you must also require them here:
+			Util: "exports-loader?Util!bootstrap/js/dist/util",
+			Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown",
+		}),
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': isProd ? JSON.stringify('production') : JSON.stringify('development')
 		}),
@@ -34,7 +43,6 @@ module.exports = (isProd, options = {}) => {
 			}
 		}),
 		new HtmlPlugin({
-			title: 'Yo',
 			template: join(src, 'index.html')
 		}),
 		new WorkboxPlugin({
@@ -45,9 +53,10 @@ module.exports = (isProd, options = {}) => {
 			clientsClaim: true,
 			skipWaiting: true,
 		}),
-		new CopyWebpackPlugin([
-			{ from: require.resolve('workbox-sw'), to: 'workbox-sw.prod.js' }
-		]),
+		new CopyWebpackPlugin([{
+			from: require.resolve('workbox-sw'),
+			to: 'workbox-sw.prod.js'
+		}]),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'vendors',
 			minChunks: function (module) {
